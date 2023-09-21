@@ -13,9 +13,10 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'numirias/semshi', {'do' : ':UpdateRemotePlugins', 'for': 'python'}    " python semantic highlighter
     Plug 'nvim-lualine/lualine.nvim'                                            " status line
     Plug 'nvim-lua/plenary.nvim'                                                " dependency for fuzzy finder
-    Plug 'nvim-telescope/telescope.nvim'                                        " fuzzy finder
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}                 " parsing, highlighting, etc
     Plug 'akinsho/toggleterm.nvim', {'tag': '*'}                                " easy access to terminals
+    Plug 'harenome/vim-mipssyntax', {'for' : 'mips'}                            " MIPS syntax highlighting
+    Plug 'lukas-reineke/indent-blankline.nvim'                                  " show indentation lines
 call plug#end()
 
 " Settings
@@ -157,10 +158,6 @@ call plug#end()
     nnoremap <leader>hr :%!xxd<CR> :set filetype=xxd<CR>
     " hex write (hw)
     nnoremap <leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR>
-
-    " Find files using Telescope
-    nnoremap <leader>ff <cmd>Telescope find_files<CR>
-    nnoremap <leader>fr <cmd>Telescope oldfiles<CR>
 
 " Commands
 " --------
