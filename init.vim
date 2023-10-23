@@ -183,6 +183,9 @@ call plug#end()
         au BufNewFile,BufRead *.asm                 :setlocal filetype=nasm
         au BufNewFile,BufRead *.tex                 :setlocal filetype=tex
         au BufNewFile,BufRead *.yab                 :setlocal filetype=basic
+        au BufNewFile,BufRead *.mips                :setlocal filetype=mips
+        au BufNewFile,BufRead *.ino                 :setlocal filetype=cpp
+        au BufNewFile,BufRead *.pde                 :setlocal filetype=java
     augroup END
 
     augroup TreeSitterHighlighting
@@ -219,15 +222,16 @@ call plug#end()
     augroup Compilers
         au!
         au FileType c           :setlocal makeprg=tcc\ -run\ %
-        au FileType markdown    :setlocal makeprg=pandoc\ \ 
-                    \--metadata-file=$HOME/.pandoc/metadata.yaml\ \ 
+        au FileType markdown    :setlocal makeprg=pandoc\ \
+                    \--metadata-file=$HOME/.pandoc/metadata.yaml\ \
                     \--defaults=$HOME/.pandoc/defaults.yaml\ -o\ %:r.pdf\ %
         au FileType python      :setlocal makeprg=python3\ %
-        au FileType cpp         :setlocal makeprg=g++\ %
+        au FileType cpp         :setlocal makeprg=g++\ -std=c++17\ %
         au FileType nasm        :setlocal makeprg=make\ file=%:t:r\ run_and_clean
-        au FileType java        :setlocal makeprg=javac\ %\ &&\ java\ %:t:r\ &&\ rm\ %:t:r.class
+        au FileType java        :setlocal makeprg=javac\ %\ &&\ java\ %:t:r\ &&\ rm\ *.class
         au FileTYpe sh,bash     :setlocal makeprg=bash\ %
         au FileType basic       :setlocal makeprg=yabasic\ %
+        au FileType tex,latex   :setlocal makeprg=pdflatex\ %\ &&\ latexmk\ -c
     augroup END
 
     " invoke appropriate debugger
