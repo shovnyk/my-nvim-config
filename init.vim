@@ -262,3 +262,9 @@ call plug#end()
 
     " formating text in buffer with 'gq' operator
     set formatprg=par\ jw72                 " operator = gq
+
+    " load external project (cwd) specific instructions (https://superuser.com/a/598964)
+    if filereadable(".vimrc_local")
+        source .vimrc_local
+        echom "Note: Project specific vim settings found and loaded!"
+    endif
