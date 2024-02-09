@@ -190,7 +190,7 @@ call plug#end()
 
     augroup TreeSitterHighlighting
         au!
-        au FileType cpp,c,java :TSEnable highlight
+        au FileType cpp,c,java,lua :TSEnable highlight
     augroup END
 
     " startup routine
@@ -232,6 +232,7 @@ call plug#end()
         au FileTYpe sh,bash     :setlocal makeprg=bash\ %
         au FileType basic       :setlocal makeprg=yabasic\ %
         au FileType tex,latex   :setlocal makeprg=pdflatex\ %\ &&\ latexmk\ -c
+        au FileType go          :setlocal makeprg=go\ run\ %
     augroup END
 
     " invoke appropriate debugger
