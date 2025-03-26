@@ -9,10 +9,11 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'tpope/vim-commentary'                                                 " comment out lines
     Plug 'tpope/vim-repeat'                                                     " repeat complex actions
     Plug 'tpope/vim-surround'                                                   " surround lines with parentheses, quotes, tags
-    Plug 'theniceboy/nvim-deus'                                                 " colorscheme with treesitter support
+    Plug 'ellisonleao/gruvbox.nvim'                                             " popular colorscheme.
     Plug 'numirias/semshi', {'do' : ':UpdateRemotePlugins', 'for': 'python'}    " python semantic highlighter
     Plug 'nvim-lualine/lualine.nvim'                                            " status line
     Plug 'nvim-lua/plenary.nvim'                                                " dependency for fuzzy finder
+    Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }                    " fuzzy finder
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}                 " parsing, highlighting, etc
     Plug 'akinsho/toggleterm.nvim', {'tag': '*'}                                " easy access to terminals
     Plug 'harenome/vim-mipssyntax', {'for' : 'mips'}                            " MIPS syntax highlighting
@@ -23,7 +24,10 @@ call plug#end()
 " --------
 
     " colors
-    colorscheme deus
+    colorscheme gruvbox
+
+    " indentation guides: start
+    lua require("ibl").setup()
 
     " nvim-lualine/lualine.nvim: start
     lua require('lualine').setup()
@@ -38,11 +42,14 @@ call plug#end()
     " general
     set guicursor=i:block                   " block cursor even in insert mode
     set number                              " enable line numbering
+    set relativenumber                      " enable relative line numbering
     set modelines=0                         " prevent malicious code being run
     set scrolloff=5                         " cursor at least 5 lines away from bottom
     set wildmode=longest:list,full          " easier to navigate menus, glob completion
     set nowrap linebreak nolist             " (~)softwrap
-    set cursorline
+    set cursorline                          " highlight current line (the cursor is on, horizontal)
+    set colorcolumn=80                      " 80 columns constraint for older terminals
+    set noswapfile                          " disable annoying swap files
 
     " helps force plugins to load correctly when it is turned back on
     " filetype off
@@ -159,6 +166,13 @@ call plug#end()
     " hex write (hw)
     nnoremap <leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR>
 
+    " Find files using Telescope command-line sugar.
+    nnoremap <leader>ff <cmd>Telescope find_files<CR>
+    nnoremap <leader>fg <cmd>Telescope live_grep<CR>
+    nnoremap <leader>fb <cmd>Telescope buffers<CR>
+    nnoremap <leader>fh <cmd>Telescope help_tags<CR>
+    nnoremap <leader>fo <cmd>Telescope oldfiles<CR>
+
 " Commands
 " --------
     " typing :W instead of :w is annoying
@@ -233,6 +247,8 @@ call plug#end()
         au FileType basic       :setlocal makeprg=yabasic\ %
         au FileType tex,latex   :setlocal makeprg=pdflatex\ %\ &&\ latexmk\ -c
         au FileType go          :setlocal makeprg=go\ run\ %
+        au FileType rust        :setlocal makeprg=rustc\ %\ &&\ ./%:t:r
+        au FileType javascript  :setlocal makeprg=node\ %
     augroup END
 
     " invoke appropriate debugger
@@ -243,7 +259,7 @@ call plug#end()
 " Functions
 " ---------
     " open files depending on the width of window in vertical/horizontal split
-    let g:dynamic_open_width_threshold = 100
+    let g:dynamic_open_width_threshold = 120
     function! DynamicOpen(filepath)
         if line('$') == 1 && &modified == 0
             execute "edit " . a:filepath
