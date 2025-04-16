@@ -1,22 +1,30 @@
 # My Neovim Configuration
 
-1. Keep Nvim updated as much as possible (through PPA/official releases page).
-1. Keep things manageable (preferably, < 500 loc).
-1. Document settings as much as possible, concisely.
+1. Keep Neovim updated as much as possible, either:
+    - through official releases preferrably (binaries), OR
+    - directly from local source, updated with upstream changes periodically, AND
+    - avoid Debian/downstream packages - they tend to be outdated.
+
+1. Keep things manageable (preferably, < 500 lines).
+
+1. Document settings as much as possible, especially niche ones.
+
 1. Do not make leader key something you use a lot in insert mode.
-1. Avoid defaults (:help nvim-defaults or https://neovim.io/doc/user/vim_diff.html)
-1. Prefer Neovim's (often improved) settings/plugins to their older Vim counterparts.
+
+1. Avoid defaults (`:help nvim-defaults` or <https://neovim.io/doc/user/vim_diff.html>)
+
+1. Prefer Neovim's (*often improved*) settings/plugins to their older Vim counterparts.
 
 ![Screenshot of Neovim with vertically split windows and a terminal](screenshot.png)
 
-# Installing the latest version of Neovim (on Linux)
+# [OLD] Installing the latest version of Neovim (on Linux)
 
 Neovim's newer versions come integrated with cool features (namely: treesitter
 and LSP) that might be of interest to you as a programmer. There might also be
 compatibility issues with plugins especially if they rely on the integration
 features introduced in newer versions which is why they won't work on older
 versions. Being on a distro like Ubuntu or Mint probably means that you are
-stuck on an older version. You can update with either:
+stuck on an older version. You can update Nvim by either:
 
 * Adding the Neovim PPA, updating your repositories and then installing from
   the command line. Note that the PPA may still not provide the very latest
